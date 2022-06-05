@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Symphony</title>
+<!-- Tasti -->
+<style>
+.testo{
+position: absolute;
+color: rgb(255, 255, 255);
+font-family: Helvetica;
+font-size: 35px;
+font-weight: 400;
+top:1%;
+left:1%;
+margin-top: 40px;
+margin-left: 5px;}
+.testo2 {
+  width: 100%;
+  height: 100%;
+  background: gr;
+    position: absolute;
+    color: rgb(255, 255, 255);
+    font-family: Helvetica;
+    font-size: 21px;
+    font-weight: 300;
+    top:1%;
+    left:1%;
+    margin-left: 5px;
+    margin-top: 5px;
+  }
+.indice{
+    position: absolute;
+    color: rgb(28, 28, 28);
+    font-family: Helvetica;
+    font-size: 15px;
+    left:1%;
+    top:1%;
+    margin-top: 15px;
+    margin-left: 5px;	}
+body {
+    background: rgb(0, 0, 0);
+    overflow-y:hidden;
+  }
+  
+
+
+  .container1 {
+    display: flex;}
+  .container2 {
+    display: flex;}
+  .container3 {
+    display: flex;}
+  .container4 {
+    display: flex;}
+  .container5 {
+    display: flex;}
+
+  .key.red {
+    background: rgb(255, 42, 0);}
+  .key.orange {
+    background: rgb(255, 145, 0)}
+  .key.yellow {
+    background: rgb(255, 234, 0)}
+  .key.green {
+    background: rgb(0, 255, 76)}
+  .key.celest {
+    background: rgb(0, 221, 255)}
+  .key.blue {
+    background: rgb(0, 81, 255)}
+  .key.violet {
+    background: rgb(132, 0, 255)}
+
+
+    .key {
+    background: rgb(255, 255, 255);
+    width: 100%;
+    height: 19vh;
+    margin:2px;
+  }
+  /* .key:hover{
+    background-color: bisque;
+  } */
+</style>
+
+<!-- Telecamera -->
+<style>
+  .telecamera{
+    display: none;
+    top: 0px;
+    position: absolute;
+  }
+  
+  canvas{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    top: 0px;
+    display: none;
+  }
+</style>
+    
+</head>
+<body>
+    <div class="container1">
+    <div class="key red"    id="nota1" ></div>
+    <div class="key orange" id="nota2"></div>
+    <div class="key yellow" id="nota3"></div>
+    <div class="key green"  id="nota4"></div>
+    <div class="key celest" id="nota5"></div>
+    <div class="key blue"   id="nota6"></div>
+	  <div class="key violet" id="nota7"></div>
+  </div> 
+  <div class="container2">
+    <div class="key violet" id="nota8"></div>
+    <div class="key red"    id="nota9"></div>
+    <div class="key orange" id="nota10"></div>
+    <div class="key yellow" id="nota11"></div>
+    <div class="key green"  id="nota12"></div>
+    <div class="key celest" id="nota13"></div>
+	  <div class="key blue"   id="nota14"></div>
+  </div> 
+  <div class="container3">
+    <div class="key green"  id="nota15"></div>
+    <div class="key celest" id="nota16"></div>
+    <div class="key blue"   id="nota17"></div>
+    <div class="key violet" id="nota18"></div>
+    <div class="key red"    id="nota19"></div>
+    <div class="key orange" id="nota20"></div>
+	  <div class="key yellow" id="nota21"></div>
+  </div> 
+  <div class="container4">
+    <div class="key blue"   id="nota22"></div>
+    <div class="key violet" id="nota23"></div>
+    <div class="key red"    id="nota24"></div>
+    <div class="key orange" id="nota25"></div>
+    <div class="key yellow" id="nota26"></div>
+    <div class="key green"  id="nota27"></div>
+	  <div class="key celest" id="nota28"></div>
+  </div> 
+  <div class="container5">
+    <div class="key yellow" id="nota29"></div>
+    <div class="key green"  id="nota30"></div>
+    <div class="key celest" id="nota31"></div>
+    <div class="key blue"   id="nota32"></div>
+    <div class="key violet" id="nota33"></div>
+    <div class="key red"    id="nota34"></div>
+	  <div class="key orange" id="nota35"></div>
+  </div> 
+
+    <!-- Audio files -->
+   <audio id="1" src="notes/1.wav"></audio>
+   <audio id="2" src="notes/2.wav"></audio>
+   <audio id="3" src="notes/3.wav"></audio>
+   <audio id="4" src="notes/4.wav"></audio>
+   <audio id="5" src="notes/5.wav"></audio>
+   <audio id="6" src="notes/6.wav"></audio>
+   <audio id="7" src="notes/7.wav"></audio>
+
+   <a class="indice" href="https://ixd-supsi.github.io/inter-faccia/"> Indice </a>
+   <div class="testo">Symphony</div>
+    
+   <!-- <div class="ingombro" onclick="toggleInfo()">
+    <span class="testo2" id="scomparsa">
+       <br> <br> <br>Click to start and move </span> -->
+  </div>
+
+  
+
+
+  <video autoplay="true" class="telecamera" ></video>
+  <canvas></canvas>
+  <pre></pre>
+  <script src="./lib/face-api/face-api.min.js"></script>
+  <script type="text/javascript">
+
+    let key = 0;
+    let colore0 = "";
+
+    init()
+
+    async function init() {
+
+      // Variabili per le coordinate del centro del volto (0.0..1.0)
+      let centerX, centerY
+      // Variabili “smussate” (0.0..1.0)
+      let smoothCenterX, smoothCenterY
+      // Boolean: il volto è stato individuato (true / false)
+      let isFace = false
+      const canvas = document.querySelector('canvas')
+      const ctx = canvas.getContext('2d')
+
+      // -- 1. carica i modelli --------------------------------------
+      const MODELS_URI = './lib/face-api/weights'
+      await faceapi.nets.tinyFaceDetector.loadFromUri(MODELS_URI)
+      console.log('Tutti i modelli sono stati caricati.')
+
+      // -- 2. inizializza la webcam ---------------------------------
+      const webcam = document.querySelector('video');
+
+      webcam.addEventListener('play', function() {
+        console.log('Webcam inizializzata e avviata.')
+        webcam.width = webcam.videoWidth 
+        webcam.height = webcam.videoHeight 
+        avviaFaceDetect(webcam)
+        setup()
+      })
+
+      // -- 3. avvia l’app -------------------------------------------
+      if (navigator.mediaDevices.getUserMedia) {
+        return navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+          webcam.srcObject = stream
+        }).catch(function(error) {
+          console.warn('C’è stato un problema con la webcam!')
+          console.log(error)
+        })
+      }
+
+      // -- 4. app principale ----------------------------------------
+      function setup() {
+        requestAnimationFrame(loop)
+
+        canvas.width = webcam.width
+        canvas.height = webcam.height
+        centerX = 0.5
+        centerY = 0.5
+        smoothCenterX = centerX
+        smoothCenterY = centerY
+      }
+
+      
+      function loop() {
+        requestAnimationFrame(loop)
+
+        const width = canvas.width
+        const height = canvas.height
+
+        smoothCenterX += (centerX - smoothCenterX) * 0.1
+        smoothCenterY += (centerY - smoothCenterY) * 0.1
+
+        ctx.fillStyle = 'rgb(20,200,200, 0.01)'
+        ctx.fillRect(0, 0, width, height)
+        // ctx.fillRect(0, 0, windowWidth, windowHeight)
+        
+
+        // -- Visualizza i dati "raw" ------------------------------
+        // ctx.strokeStyle = 'rgb(190,190,190)'
+        // ctx.beginPath()
+        // ctx.moveTo(centerX * width, 0)
+        // ctx.lineTo(centerX * width, height)
+        // ctx.moveTo(0, centerY * height)
+        // ctx.lineTo(width, centerY * height)
+        // ctx.stroke()
+        // -- Visualizza i dati "smooth" ---------------------------
+        ctx.strokeStyle = 'red'
+        ctx.beginPath()
+        ctx.moveTo(smoothCenterX * width, 0)
+        ctx.lineTo(smoothCenterX * width, height)
+        ctx.moveTo(0, smoothCenterY * height)
+        ctx.lineTo(width, smoothCenterY * height)
+        ctx.stroke()
+        // document.querySelector('pre').innerHTML = out
+      }
+
+      function avviaFaceDetect(videoSrc) {
+        console.log('FaceDetect avviato.')
+
+        setInterval(async function() {
+          const detections = await faceapi.detectSingleFace(videoSrc, new faceapi.TinyFaceDetectorOptions())
+          if (detections) {
+            const box = detections.box
+            // centerX e centerY sono normalizzati!
+            // centerX = (box._width * 2 - box._x) / videoSrc.videoWidth
+						centerX = (box._x + box._width / 2) / videoSrc.videoWidth
+            centerY = (box._y + box._height / 2) / videoSrc.videoHeight
+            isFace = true
+
+            // condizioni per selezionare una cella
+            if (centerX < 0.5 && centerY < 0.5){
+              key = 1
+              colore0 = "nota1"
+            }
+
+            else if (centerX < 0.5 && centerY > 0.5) {
+              key = 2
+              colore0 = "nota2"
+            }
+
+            playMusic(key)
+            document.getElementById(colore0).style.backgroundColor = "black";
+          
+            console.log(centerX,centerY)
+            // console.log(videoSrc.videoWidth,videoSrc.videoHeight)
+          } else {
+            isFace = false
+          }
+        }, 60)
+      }
+    }
+
+
+// Script audio play
+// let keys=document.querySelectorAll('.key');
+
+// keys.forEach(key =>{
+// key.addEventListener('mouseenter',()=>playMusic(key));
+// });
+function playMusic(new_key){
+    const audio = document.getElementById(new_key);
+    // audio.currentTime=0;
+      audio.play();
+      console.log(new_key,key)
+}
+
+
+// // Script scomparsa/comparsa testo
+// function toggleInfo() {
+//  let text = document.getElementById("scomparsa");
+//  if(text.style.visibility === 'hidden'){
+//    text.style.visibility = 'visible';
+//  } else {
+//      text.style.visibility = 'hidden';
+//  }
+ 
+//  }
+ 
+   </script>
+
+
+   <!-- Prova  senza face id-->
+   <!-- <script>
+let keys=document.querySelectorAll('.key');
+
+keys.forEach(key =>{
+key.addEventListener('mouseenter',()=>playMusic(key));
+});
+
+function playMusic(key){
+    const audio=document.getElementById(key.dataset.note);
+    audio.currentTime=0;
+    audio.play();
+}
+
+     // Script scomparsa/comparsa testo
+function toggleInfo() {
+ let text = document.getElementById("scomparsa");
+ if(text.style.visibility === 'hidden'){
+   text.style.visibility = 'visible';
+ } else {
+     text.style.visibility = 'hidden';
+ } }
+   </script> -->
+
+</body>
+</html>
