@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Symphony</title>
+		<style type="text/css">
+			body {
+				margin: 0;
+			}
+		</style>
 
-    <title>Symphony</title>
-<!-- Tasti -->
-<style>
-.testo{
+		<style>
+			.testo{
 position: absolute;
 color: rgb(255, 255, 255);
 font-family: Helvetica;
@@ -18,20 +21,6 @@ top:1%;
 left:1%;
 margin-top: 40px;
 margin-left: 5px;}
-.testo2 {
-  width: 100%;
-  height: 100%;
-  background: gr;
-    position: absolute;
-    color: rgb(255, 255, 255);
-    font-family: Helvetica;
-    font-size: 21px;
-    font-weight: 300;
-    top:1%;
-    left:1%;
-    margin-left: 5px;
-    margin-top: 5px;
-  }
 .indice{
     position: absolute;
     color: rgb(28, 28, 28);
@@ -41,318 +30,300 @@ margin-left: 5px;}
     top:1%;
     margin-top: 15px;
     margin-left: 5px;	}
-body {
-    background: rgb(0, 0, 0);
-    overflow-y:hidden;
-  }
-  
+		</style>
+	</head>
+	<body>
+		<a class="indice" href="https://ixd-supsi.github.io/inter-faccia/"> Indice </a>
+		<div class="testo">Symphony</div>
 
 
-  .container1 {
-    display: flex;}
-  .container2 {
-    display: flex;}
-  .container3 {
-    display: flex;}
-  .container4 {
-    display: flex;}
-  .container5 {
-    display: flex;}
-
-  .key.red {
-    background: rgb(255, 42, 0);}
-  .key.orange {
-    background: rgb(255, 145, 0)}
-  .key.yellow {
-    background: rgb(255, 234, 0)}
-  .key.green {
-    background: rgb(0, 255, 76)}
-  .key.celest {
-    background: rgb(0, 221, 255)}
-  .key.blue {
-    background: rgb(0, 81, 255)}
-  .key.violet {
-    background: rgb(132, 0, 255)}
+		    <!-- Audio files -->
+			<audio id="1" src="notes/1.wav"></audio>
+			<audio id="2" src="notes/2.wav"></audio>
+			<audio id="3" src="notes/3.wav"></audio>
+			<audio id="4" src="notes/4.wav"></audio>
+			<audio id="5" src="notes/5.wav"></audio>
+			<audio id="6" src="notes/6.wav"></audio>
+			<audio id="7" src="notes/7.wav"></audio>
 
 
-    .key {
-    background: rgb(255, 255, 255);
-    width: 100%;
-    height: 19vh;
-    margin:2px;
-  }
-  /* .key:hover{
-    background-color: bisque;
-  } */
-</style>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+		<script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
 
-<!-- Telecamera -->
-<style>
-  .telecamera{
-    display: none;
-    top: 0px;
-    position: absolute;
-  }
-  
-  canvas{
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    top: 0px;
-    display: none;
-  }
-</style>
-    
-</head>
-<body>
-    <div class="container1">
-    <div class="key red"    id="nota1" ></div>
-    <div class="key orange" id="nota2"></div>
-    <div class="key yellow" id="nota3"></div>
-    <div class="key green"  id="nota4"></div>
-    <div class="key celest" id="nota5"></div>
-    <div class="key blue"   id="nota6"></div>
-	  <div class="key violet" id="nota7"></div>
-  </div> 
-  <div class="container2">
-    <div class="key violet" id="nota8"></div>
-    <div class="key red"    id="nota9"></div>
-    <div class="key orange" id="nota10"></div>
-    <div class="key yellow" id="nota11"></div>
-    <div class="key green"  id="nota12"></div>
-    <div class="key celest" id="nota13"></div>
-	  <div class="key blue"   id="nota14"></div>
-  </div> 
-  <div class="container3">
-    <div class="key green"  id="nota15"></div>
-    <div class="key celest" id="nota16"></div>
-    <div class="key blue"   id="nota17"></div>
-    <div class="key violet" id="nota18"></div>
-    <div class="key red"    id="nota19"></div>
-    <div class="key orange" id="nota20"></div>
-	  <div class="key yellow" id="nota21"></div>
-  </div> 
-  <div class="container4">
-    <div class="key blue"   id="nota22"></div>
-    <div class="key violet" id="nota23"></div>
-    <div class="key red"    id="nota24"></div>
-    <div class="key orange" id="nota25"></div>
-    <div class="key yellow" id="nota26"></div>
-    <div class="key green"  id="nota27"></div>
-	  <div class="key celest" id="nota28"></div>
-  </div> 
-  <div class="container5">
-    <div class="key yellow" id="nota29"></div>
-    <div class="key green"  id="nota30"></div>
-    <div class="key celest" id="nota31"></div>
-    <div class="key blue"   id="nota32"></div>
-    <div class="key violet" id="nota33"></div>
-    <div class="key red"    id="nota34"></div>
-	  <div class="key orange" id="nota35"></div>
-  </div> 
+		<script type="text/javascript">
 
-    <!-- Audio files -->
-   <audio id="1" src="notes/1.wav"></audio>
-   <audio id="2" src="notes/2.wav"></audio>
-   <audio id="3" src="notes/3.wav"></audio>
-   <audio id="4" src="notes/4.wav"></audio>
-   <audio id="5" src="notes/5.wav"></audio>
-   <audio id="6" src="notes/6.wav"></audio>
-   <audio id="7" src="notes/7.wav"></audio>
+			let faceapi
+			let video
+			let detections = []
 
-   <a class="indice" href="https://ixd-supsi.github.io/inter-faccia/"> Indice </a>
-   <div class="testo">Symphony</div>
-    
-   <!-- <div class="ingombro" onclick="toggleInfo()">
-    <span class="testo2" id="scomparsa">
-       <br> <br> <br>Click to start and move </span> -->
-  </div>
+			const VIDEO_W = 360 / 2
+			const VIDEO_H = 270 / 2
 
-  
+			let nasoX = 0
+			let nasoY = 0
+			let smoothX = 0
+			let smoothY = 0
 
 
-  <video autoplay="true" class="telecamera" ></video>
-  <canvas></canvas>
-  <pre></pre>
-  <script src="./lib/face-api/face-api.min.js"></script>
-  <script type="text/javascript">
+			function windowResized(){
+			resizeCanvas(windowWidth, windowHeight)}
 
-    let key = 0;
-    let colore0 = "";
+			function setup() {
+				createCanvas(windowWidth, windowHeight)
+				background(240)
+				video = createCapture(VIDEO)
+				video.size(VIDEO_W, VIDEO_H)
+				video.hide()
 
-    init()
+				const detection_options = {
+					withLandmarks: true,
+					withDescriptors: false,
+				}
+				faceapi = ml5.faceApi(video, detection_options, modelReady)
+			}
 
-    async function init() {
+			function draw() {
+				background(220)
+				//image(video, 0, 0, VIDEO_W, VIDEO_H)
+				if (detections.length > 0) {
+					drawBox(detections)
+					drawLandmarks(detections)
+					const naso = detections[0].parts.nose
+					const nX = naso[3]._x
+					const nY = naso[3]._y
+					nasoX = map(nX, 0, VIDEO_W, width, 0)
+					nasoY = map(nY, 0, VIDEO_H, 0, height)
+			}
 
-      // Variabili per le coordinate del centro del volto (0.0..1.0)
-      let centerX, centerY
-      // Variabili “smussate” (0.0..1.0)
-      let smoothCenterX, smoothCenterY
-      // Boolean: il volto è stato individuato (true / false)
-      let isFace = false
-      const canvas = document.querySelector('canvas')
-      const ctx = canvas.getContext('2d')
+				smoothX += (nasoX - smoothX) * 0.2
+				smoothY += (nasoY - smoothY) * 0.2
 
-      // -- 1. carica i modelli --------------------------------------
-      const MODELS_URI = './lib/face-api/weights'
-      await faceapi.nets.tinyFaceDetector.loadFromUri(MODELS_URI)
-      console.log('Tutti i modelli sono stati caricati.')
+				const numX = 7
+				const numY = 5
+				const cellaX = Math.floor(width / numX)
+				const cellaY = Math.floor(height / numY)
+				const colonna = Math.floor(smoothX / cellaX)
+				const riga = Math.floor(smoothY / cellaY)
 
-      // -- 2. inizializza la webcam ---------------------------------
-      const webcam = document.querySelector('video');
+				noStroke()
 
-      webcam.addEventListener('play', function() {
-        console.log('Webcam inizializzata e avviata.')
-        webcam.width = webcam.videoWidth 
-        webcam.height = webcam.videoHeight 
-        avviaFaceDetect(webcam)
-        setup()
-      })
+				fill(244, 67, 54)
+				rect(1,0,width/7,height/5)
+				rect(width/7,height/5,width/7,height/5)
+				rect(width/1.75,height/2.5,width/7,height/5)
+				rect(width/3.5,height/1.66,width/7,height/5)
+				rect(width/1.4,height/1.25,width/7,height/5)
 
-      // -- 3. avvia l’app -------------------------------------------
-      if (navigator.mediaDevices.getUserMedia) {
-        return navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-          webcam.srcObject = stream
-        }).catch(function(error) {
-          console.warn('C’è stato un problema con la webcam!')
-          console.log(error)
-        })
-      }
+				fill(251, 140, 0)
+				rect(width/7,0,width/7,height/5)
+				rect(width/3.5,height/5,width/7,height/5)
+				rect(width/1.4,height/2.5,width/7,height/5)
+				rect(width/2.33,height/1.66,width/7,height/5)
+				rect(width/1.167,height/1.25,width/7,height/5)
 
-      // -- 4. app principale ----------------------------------------
-      function setup() {
-        requestAnimationFrame(loop)
+				fill(255, 235, 59)
+				rect(width/3.5,0,width/7,height/5)
+				rect(width/2.33,height/5,width/7,height/5)
+				rect(width/1.167,height/2.5,width/7,height/5)
+				rect(width/1.75,height/1.66,width/7,height/5)
+				rect(1,height/1.25,width/7,height/5)
 
-        canvas.width = webcam.width
-        canvas.height = webcam.height
-        centerX = 0.5
-        centerY = 0.5
-        smoothCenterX = centerX
-        smoothCenterY = centerY
-      }
+				fill(139, 195, 74)
+				rect(width/2.33,0,width/7,height/5)
+				rect(width/1.75,height/5,width/7,height/5)
+				rect(1,height/2.5,width/7,height/5)
+				rect(width/1.4,height/1.66,width/7,height/5)
+				rect(width/7,height/1.25,width/7,height/5)
 
-      
-      function loop() {
-        requestAnimationFrame(loop)
+				fill(3, 169, 244)
+				rect(width/1.75,0,width/7,height/5)
+				rect(width/1.4,height/5,width/7,height/5)
+				rect(width/7,height/2.5,width/7,height/5)
+				rect(width/1.167,height/1.66,width/7,height/5)
+				rect(width/3.5,height/1.25,width/7,height/5)
 
-        const width = canvas.width
-        const height = canvas.height
+				fill(63, 81, 181)
+				rect(width/1.4,0,width/7,height/5)
+				rect(width/1.167,height/5,width/7,height/5)
+				rect(width/3.5,height/2.5,width/7,height/5)
+				rect(1,height/1.66,width/7,height/5)
+				rect(width/2.33,height/1.25,width/7,height/5)
+				
+				fill(156, 39, 176)
+				rect(width/1.167,0,width/7,height/5)
+				rect(1,height/5,width/7,height/5)
+				rect(width/2.33,height/2.5,width/7,height/5)
+				rect(width/7,height/1.66,width/7,height/5)
+				rect(width/1.75,height/1.25,width/7,height/5)
 
-        smoothCenterX += (centerX - smoothCenterX) * 0.1
-        smoothCenterY += (centerY - smoothCenterY) * 0.1
+				noStroke()
+				fill(0)
+				rect(colonna * cellaX, riga * cellaY, cellaX, cellaY)
+				// console.log(riga,colonna)
 
-        ctx.fillStyle = 'rgb(20,200,200, 0.01)'
-        ctx.fillRect(0, 0, width, height)
-        // ctx.fillRect(0, 0, windowWidth, windowHeight)
-        
+				noFill()
+				stroke(0)
+				strokeWeight(6)
+				for (let i=0; i<numX; i++){
+					line(i * cellaX, 0, i * cellaX, height)}
+				for (let i=0; i<numY; i++){
+					line(0, i * cellaY, width, i * cellaY)}
 
-        // -- Visualizza i dati "raw" ------------------------------
-        // ctx.strokeStyle = 'rgb(190,190,190)'
-        // ctx.beginPath()
-        // ctx.moveTo(centerX * width, 0)
-        // ctx.lineTo(centerX * width, height)
-        // ctx.moveTo(0, centerY * height)
-        // ctx.lineTo(width, centerY * height)
-        // ctx.stroke()
-        // -- Visualizza i dati "smooth" ---------------------------
-        ctx.strokeStyle = 'red'
-        ctx.beginPath()
-        ctx.moveTo(smoothCenterX * width, 0)
-        ctx.lineTo(smoothCenterX * width, height)
-        ctx.moveTo(0, smoothCenterY * height)
-        ctx.lineTo(width, smoothCenterY * height)
-        ctx.stroke()
-        // document.querySelector('pre').innerHTML = out
-      }
-
-      function avviaFaceDetect(videoSrc) {
-        console.log('FaceDetect avviato.')
-
-        setInterval(async function() {
-          const detections = await faceapi.detectSingleFace(videoSrc, new faceapi.TinyFaceDetectorOptions())
-          if (detections) {
-            const box = detections.box
-            // centerX e centerY sono normalizzati!
-            // centerX = (box._width * 2 - box._x) / videoSrc.videoWidth
-						centerX = (box._x + box._width / 2) / videoSrc.videoWidth
-            centerY = (box._y + box._height / 2) / videoSrc.videoHeight
-            isFace = true
-
-            // condizioni per selezionare una cella
-            if (centerX < 0.5 && centerY < 0.5){
-              key = 1
-              colore0 = "nota1"
-            }
-
-            else if (centerX < 0.5 && centerY > 0.5) {
-              key = 2
-              colore0 = "nota2"
-            }
-
-            playMusic(key)
-            document.getElementById(colore0).style.backgroundColor = "black";
-          
-            console.log(centerX,centerY)
-            // console.log(videoSrc.videoWidth,videoSrc.videoHeight)
-          } else {
-            isFace = false
-          }
-        }, 60)
-      }
-    }
+				// noStroke()
+				// fill(247, 220, 111)
+				// ellipse(smoothX, smoothY, 20, 20)
 
 
-// Script audio play
-// let keys=document.querySelectorAll('.key');
+			// condizioni per selezionare una cella
+			if (riga == 0 && colonna == 0){
+              key = 1	}
+            else if (riga == 0  && colonna == 1) {
+              key = 2	}
+            else if (riga ==  0 && colonna == 2) {
+              key = 3	}
+            else if (riga ==  0 && colonna == 3) {
+              key = 4	}
+            else if (riga ==  0 && colonna == 4) {
+              key = 5	}
+            else if (riga == 0 && colonna == 5) {
+              key = 6	}
+            else if (riga == 0 && colonna == 6) {
+              key = 7	}
 
-// keys.forEach(key =>{
-// key.addEventListener('mouseenter',()=>playMusic(key));
-// });
-function playMusic(new_key){
-    const audio = document.getElementById(new_key);
-    // audio.currentTime=0;
-      audio.play();
-      console.log(new_key,key)
-}
+			else if (riga == 1 && colonna == 0) {
+              key = 7	}
+            else if (riga == 1  && colonna == 1) {
+              key = 1	}
+            else if (riga ==  1 && colonna == 2) {
+              key = 2	}
+            else if (riga ==  1 && colonna == 3) {
+              key = 3	}
+            else if (riga ==  1 && colonna == 4) {
+              key = 4	}
+            else if (riga == 1 && colonna == 5) {
+              key = 5	}
+            else if (riga == 1 && colonna == 6) {
+              key = 6	}
+
+			else if (riga == 2 && colonna == 0) {
+              key = 4	}
+            else if (riga == 2  && colonna == 1) {
+              key = 5	}
+            else if (riga ==  2 && colonna == 2) {
+              key = 6	}
+            else if (riga ==  2 && colonna == 3) {
+              key = 7	}
+            else if (riga ==  2 && colonna == 4) {
+              key = 1	}
+            else if (riga == 2 && colonna == 5) {
+              key = 2	}
+            else if (riga == 2 && colonna == 6) {
+              key = 3	}
+
+			else if (riga == 3 && colonna == 0) {
+              key = 6	}
+            else if (riga == 3  && colonna == 1) {
+              key = 7	}
+            else if (riga ==  3 && colonna == 2) {
+              key = 1	}
+            else if (riga ==  3 && colonna == 3) {
+              key = 2	}
+            else if (riga ==  3 && colonna == 4) {
+              key = 3	}
+            else if (riga == 3 && colonna == 5) {
+              key = 4	}
+            else if (riga == 3 && colonna == 6) {
+              key = 5	}
+
+			 else if (riga == 4 && colonna == 0) {
+              key = 3	}
+            else if (riga == 4  && colonna == 1) {
+              key = 4	}
+            else if (riga ==  4 && colonna == 2) {
+              key = 5	}
+            else if (riga ==  4 && colonna == 3) {
+              key = 6	}
+            else if (riga ==  4 && colonna == 4) {
+              key = 7	}
+            else if (riga == 4 && colonna == 5) {
+              key = 1	}
+            else if (riga == 4 && colonna == 6) {
+              key = 2	}
+
+			playMusic(key)
+			}
+
+			function modelReady() {
+				console.log('Tutti i modelli sono stati caricati!')
+				faceapi.detect(gotResults)}
+
+			function gotResults(err, result) {
+				if (err) {
+					console.log(err)
+					return
+				}
+				if (result && result.length > 0) {
+					// passa la variabile a P5
+					detections = result
+				}
+				faceapi.detect(gotResults)
+			}
+
+			function drawBox(detections){
+				for(let i = 0; i < detections.length; i++){
+					const alignedRect = detections[i].alignedRect
+					const x = alignedRect._box._x
+					const y = alignedRect._box._y
+					const boxWidth = alignedRect._box._width
+					const boxHeight  = alignedRect._box._height
+
+					noFill()
+					stroke(161, 95, 251)
+					strokeWeight(0)
+					rect(x, y, boxWidth, boxHeight)
+				}}
+
+			function drawLandmarks(detections){
+				noFill();
+				stroke(161, 95, 251)
+				strokeWeight(0)
+
+				for(let i = 0; i < detections.length; i++){
+					const mouth = detections[i].parts.mouth
+					const nose = detections[i].parts.nose
+					const leftEye = detections[i].parts.leftEye
+					const rightEye = detections[i].parts.rightEye
+					const rightEyeBrow = detections[i].parts.rightEyeBrow
+					const leftEyeBrow = detections[i].parts.leftEyeBrow
+					drawPart(mouth, true)
+					drawPart(nose, false)
+					drawPart(leftEye, true)
+					drawPart(leftEyeBrow, false)
+					drawPart(rightEye, true)
+					drawPart(rightEyeBrow, false)
+				}}
+
+			function drawPart(feature, closed){
+				beginShape();
+				for(let i = 0; i < feature.length; i++){
+					const x = feature[i]._x
+					const y = feature[i]._y
+					vertex(x, y)}
+
+				if(closed === true){
+					endShape(CLOSE)
+				} else {
+					endShape()}
+				}
 
 
-// // Script scomparsa/comparsa testo
-// function toggleInfo() {
-//  let text = document.getElementById("scomparsa");
-//  if(text.style.visibility === 'hidden'){
-//    text.style.visibility = 'visible';
-//  } else {
-//      text.style.visibility = 'hidden';
-//  }
- 
-//  }
- 
-   </script>
-
-
-   <!-- Prova  senza face id-->
-   <!-- <script>
-let keys=document.querySelectorAll('.key');
-
-keys.forEach(key =>{
-key.addEventListener('mouseenter',()=>playMusic(key));
-});
-
-function playMusic(key){
-    const audio=document.getElementById(key.dataset.note);
-    audio.currentTime=0;
-    audio.play();
-}
-
-     // Script scomparsa/comparsa testo
-function toggleInfo() {
- let text = document.getElementById("scomparsa");
- if(text.style.visibility === 'hidden'){
-   text.style.visibility = 'visible';
- } else {
-     text.style.visibility = 'hidden';
- } }
-   </script> -->
-
-</body>
+				function playMusic(new_key){
+    			const audio = document.getElementById(new_key);
+    			// audio.currentTime=0;
+      			audio.play();
+    			console.log(new_key,key)
+				}
+		</script>
+	</body>
 </html>
