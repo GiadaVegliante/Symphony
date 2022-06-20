@@ -30,11 +30,29 @@ margin-left: 5px;}
     top:1%;
     margin-top: 15px;
     margin-left: 5px;	}
+
+	.testo2 {
+ 	 width: 100%;
+  	height: 100%;
+    position: absolute;
+    color: rgb(255, 255, 255);
+    font-family: Helvetica;
+    font-size: 21px;
+    font-weight: 300;
+    top:1%;
+    left:1%;
+    margin-left: 5px;
+    margin-top: 10px;}
 		</style>
 	</head>
 	<body>
 		<a class="indice" href="https://ixd-supsi.github.io/inter-faccia/"> Indice </a>
 		<div class="testo">Symphony</div>
+
+		   <div class="ingombro" onclick="toggleInfo()">
+   				<span class="testo2" id="scomparsa">
+       			<br> <br> <br> Click to start and move </span>
+			</div>
 
 
 		    <!-- Audio files -->
@@ -324,6 +342,19 @@ margin-left: 5px;}
       			audio.play();
     			console.log(new_key,key)
 				}
+
+
+
+					// Script scomparsa/comparsa testo
+					function toggleInfo() {
+					let text = document.getElementById("scomparsa");
+ 					if(text.style.visibility === 'hidden'){
+					text.style.visibility = 'visible';
+ 					} else {
+    				text.style.visibility = 'hidden';
+ 					}
+ 
+ }
 		</script>
 	</body>
 </html>
